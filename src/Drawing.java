@@ -19,7 +19,7 @@ public class Drawing extends Canvas {
         g.drawLine(300,1000,300,0);
         g.drawLine(400,1000,400,0);
         g.drawLine(500,1000,500,0);
-        g.drawLine(600,1000,600,0);
+
         g.drawLine(700,1000,700,0);
         g.drawLine(800,1000,800,0);
         g.drawLine(900,1000,900,0);
