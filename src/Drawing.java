@@ -1,5 +1,4 @@
-import java.awt.Canvas;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.JFrame;
 
 public class Drawing extends Canvas {
@@ -13,31 +12,19 @@ public class Drawing extends Canvas {
     }
 
     public void paint(Graphics g) {
-        g.drawLine(1,1000,1,0);
-        g.drawLine(100,1000,100,0);
-        g.drawLine(200,1000,200,0);
-        g.drawLine(300,1000,300,0);
-        g.drawLine(400,1000,400,0);
-        g.drawLine(500,1000,500,0);
-        g.drawLine(600,1000,600,0);
-        g.drawLine(700,1000,700,0);
-        g.drawLine(800,1000,800,0);
-        g.drawLine(900,1000,900,0);
 
-        g.drawLine(1000,1,0,1);
-        g.drawLine(1000,100,0,100);
-        g.drawLine(1000,200,0,200);
-        g.drawLine(1000,300,0,300);
-        g.drawLine(1000,400,0,400);
-        g.drawLine(1000,500,0,500);
-        g.drawLine(1000,600,0,600);
-        g.drawLine(1000,700,0,700);
-        g.drawLine(1000,800,0,800);
-        g.drawLine(1000,900,0,900);
+        for (int x = 0; x < 1000; x = x + 200) {
+            for (int y = 0; y < 1000; y = y + 200) {
 
+                g.fillRect(x, y, 100, 100);
+            }
+        }
+        for (int x = 100; x < 1000; x = x + 200) {
+            for (int y = 100; y < 1000; y = y + 200) {
 
-
+                g.fillRect(x, y, 100, 100);
+            }
+        }
     }
-
 
 }
