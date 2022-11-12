@@ -6,7 +6,7 @@ public class Drawing extends Canvas {
     public static void main(String[] args) {
         JFrame frame = new JFrame("My Drawing");
         Canvas canvas = new Drawing();
-        canvas.setSize(1000, 1000);
+        canvas.setSize(1600, 1000);
         frame.add(canvas);
         frame.pack();
         frame.setVisible(true);
@@ -68,9 +68,9 @@ public class Drawing extends Canvas {
             y1 = y2;
             x2 = x2 + x;
             y2 = y2 + y;
-            if (x2 < 10) x2 = 10;
-            if (y2 < 10) y2 = 10;
-            if (x2 >= 1000) x2 = 999;
+            if (x2 < 0) x2 = 0;
+            if (y2 < 0) y2 = 0;
+            if (x2 >= 1600) x2 = 1599;
             if (y2 >= 1000) y2 = 999;
             g.drawLine(x1, y1, x2, y2);
 
@@ -99,9 +99,9 @@ public class Drawing extends Canvas {
             by1 = by2;
             bx2 = bx2 + bx;
             by2 = by2 + by;
-            if (bx2 < 10) bx2 = 10;
-            if (by2 < 10) by2 = 10;
-            if (bx2 >= 1000) bx2 = 999;
+            if (bx2 < 0) bx2 = 0;
+            if (by2 < 0) by2 = 0;
+            if (bx2 >= 1600) bx2 = 1599;
             if (by2 >= 1000) by2 = 999;
             g.drawLine(bx1, by1, bx2, by2);
             g.drawLine(x1,y1,bx1,by1);
