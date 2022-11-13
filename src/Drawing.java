@@ -1,89 +1,60 @@
 import java.awt.*;
-import java.util.Random;
+import java.time.Instant;
 import javax.swing.JFrame;
 
 public class Drawing extends Canvas {
     public static void main(String[] args) {
         JFrame frame = new JFrame("My Drawing");
         Canvas canvas = new Drawing();
-        canvas.setSize(1600, 1000);
+        canvas.setSize(1000, 1000);
         frame.add(canvas);
         frame.pack();
         frame.setVisible(true);
     }
 
+    float clamp(float c) {
+        return Math.max(0, Math.min(c, 1));
+    }
+
+    Color lerp(float d, float a, float b, float red1, float green1, float blue1, float red2, float green2, float blue2) {
+        d = (d - a) / (b - a);
+        return new Color(
+                clamp(red1 * (1 - d) + red2 * d),
+                clamp(green1 * (1 - d) + green2 * d),
+                clamp(blue1 * (1 - d) + blue2 * d));
+    }
+
     public void paint(Graphics g) {
-        Random r = new Random();
+        OpenSimplexNoise r = new OpenSimplexNoise(Instant.now().getEpochSecond());
 
+        for (int y = 0; y < 1000; y = y + 1) {
+            for (int x = 0; x < 1000; x = x + 1) {
 
-        int x1;
-        int y1;
+                float t = (float) (
+                        r.eval(x / 1000f, y / 1000f) +
+                                r.eval(x / 100f, y / 100f) * 0.3 +
+                                r.eval(x / 10f, y / 10f) * 0.03);
 
-        int x2 = 500;
-        int y2 = 400;
+                t = t / 1.33f;
 
-        float red = 127;
-        float green = 127;
-        float blue = 127;
+                Color color = Color.black;
 
+                if (t < -0.2f) {
+                    color = lerp(t, -1, -0.2f, 0, 0, 0, 0, 0, 1);
+                } else if (t < 0.1) {
+                    color = lerp(t, -0.2f, 0.1f, 1, 1, 0, 0, 0.5f, 0.5f);
+                } else if (t < 0.2) {
+                    color = lerp(t, 0.1f, 0.2f, 0, 0.5f, 0.5f, 0, 1, 0);
+                } else if (t < 0.5) {
+                    color = lerp(t, 0.2f, 0.5f, 0, 1, 0, 1, 0.5f, 0.5f);
+                } else {
+                    color = lerp(t, 0.5f, 0.6f, 1, 0.5f, 0.5f, 1, 1, 1);
+                }
 
-
-        float  bx1;
-        float  by1;
-
-        float bx2 = 100;
-        float by2 = 400;
-
-        for (int a = 0;  ; a = a + 1) {
-
-
-            int x = r.nextInt(3);
-            x = x - 1;
-            int y = r.nextInt(3);
-            y = y - 1;
-
-
-
-            red = red + r.nextFloat(-0.2f, +0.2f);
-            green = green + r.nextFloat(-0.2f, +0.2f);
-            blue = blue + r.nextFloat(-0.1f, +0.1f);
-
-            if (red < 0) red = 0;
-            if (green < 0) green = 0;
-            if (blue < 0) blue = 0;
-            if (red > 255) red = 255;
-            if (green > 255) green = 255;
-            if (blue > 255) blue = 255;
-
-            g.setColor(new Color(red/255, green/255, blue/255));
-
-
-
-            x1 = x2;
-            y1 = y2;
-            x2 = x2 + x;
-            y2 = y2 + y;
-            if (x2 < 0) x2 = 0;
-            if (y2 < 0) y2 = 0;
-            if (x2 >= 1600) x2 = 1599;
-            if (y2 >= 1000) y2 = 999;
-
-            float bx = r.nextFloat(-0.5f, +0.5f);
-            float by = r.nextFloat(-0.5f, +0.5f);
-
-
-
-
-
-            bx1 = bx2;
-            by1 = by2;
-            bx2 = bx2 + bx;
-            by2 = by2 + by;
-            if (bx2 < 0) bx2 = 0;
-            if (by2 < 0) by2 = 0;
-            if (bx2 >= 1600) bx2 = 1599;
-            if (by2 >= 1000) by2 = 999;
-            g.drawLine(x1,y1,Math.round(bx1),Math.round(by1));
+                g.setColor(color);
+                g.drawLine(x, y, x, y);
+            }
         }
+
     }
 }
